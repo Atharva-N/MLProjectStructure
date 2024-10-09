@@ -1,4 +1,5 @@
 import os
+import bentoml
 import sys
 from dataclasses import dataclass
 from catboost import CatBoostRegressor
@@ -97,6 +98,7 @@ class ModelTrainer:
                 file_path=self.model_trainer_config.trained_model_file_path,
                 obj=best_model
             )
+            saved_model = bentoml.sklearn.save_model("Best_Model", best_model)
             predicted=best_model.predict(X_test)
             r2_square = r2_score(y_test, predicted)
             return r2_square
